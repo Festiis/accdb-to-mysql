@@ -1,0 +1,5 @@
+# Ignore Access database files
+*.accdb
+
+# Ignore the 'mysql' folder and its contents
+/mysql/
