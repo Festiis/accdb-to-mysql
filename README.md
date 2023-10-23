@@ -24,7 +24,7 @@ It generates SQL queries for table creation, data insertion, and relationships, 
    - Open PowerShell in the script's directory.
    - Run the script using the following command:
      ```
-     .\script.ps1
+     .\exportAccdb.ps1
      ```
 
 3. **Follow the Prompts**:
