@@ -27,7 +27,8 @@
 Function SqlQueryForTable {
   param(
       [string]$tableName,
-      [bool]$exportData
+      [bool]$exportData,
+      [bool]$escapeBackslashes
   )
 
   # AutoNumber attribute
@@ -138,8 +139,10 @@ Function SqlQueryForTable {
                 {$_ -in 10, 12}  { 
                   if ($null -eq $value) {
                     "NULL"
+                  } elseif ($escapeBackslashes) {
+                    "'" + "$value".Replace("\", "\\") + "'"
                   } else {
-                    "'$value'"
+                    "'$value'" 
                   }
                 } # dbText, dbMemo (Long Text)
                 default { "'$value'" }  # Default to VARCHAR(255) for unknown types
@@ -190,6 +193,12 @@ if (-not $accessDatabasePath) {
 $exportData = Read-Host -Prompt "Do you want to export data to SQL files? (yes/no)"
 $exportData = $exportData -eq "yes" -or $exportData -eq "y"
 
+$escapeBackslashes = $false
+if ($exportData) {
+  $escapeBackslashes = Read-Host -Prompt "Do you want to escape backslashes? (yes/no)"
+  $escapeBackslashes = $escapeBackslashes -eq "yes" -or $escapeBackslashes -eq "y"
+}
+
 # Prompt user for the database password
 $accessPassword = Read-Host -Prompt "Enter the password for the Access database" 
 
@@ -233,7 +242,7 @@ foreach ($table in $accessDatabase.TableDefs) {
   }
 
   
-  $sqlQuery = SqlQueryForTable -tableName $tableName -exportData $exportData
+  $sqlQuery = SqlQueryForTable -tableName $tableName -exportData $exportData -escapeBackslashes $escapeBackslashes
 
   # Add the table creation SQL to the array
   $sqlStatements += $sqlQuery
