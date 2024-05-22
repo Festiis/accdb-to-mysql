@@ -64,9 +64,9 @@ Function SqlQueryForTable {
       }    # dbdate
       10 { 
         if ($field.Properties["AllowZeroLength"].Value -eq $true) {
-          "VARCHAR($($fiel.Size)) NULL DEFAULT NULL"
+          "VARCHAR($($field.Size)) NULL DEFAULT NULL"
         } else {
-          "VARCHAR($($fiel.Size)) NOT NULL"
+          "VARCHAR($($field.Size)) NOT NULL"
         } 
       }   # dbText
       12 { "LONGTEXT" }       # dbMemo (Long Text)
