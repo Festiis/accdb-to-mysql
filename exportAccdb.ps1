@@ -64,7 +64,7 @@ Function SqlQueryForTable {
         }
       }    # dbdate
       10 { 
-        if ($field.Properties["AllowZeroLength"].Value -eq $true) {
+        if ($field.Properties["AllowZeroLength"].Value -eq $true -and $field.Name -ne $primaryKey) {
           "VARCHAR($($field.Size)) NULL DEFAULT NULL"
         } else {
           "VARCHAR($($field.Size)) NOT NULL"
@@ -200,7 +200,8 @@ if ($exportData) {
 }
 
 # Prompt user for the database password
-$accessPassword = Read-Host -Prompt "Enter the password for the Access database" 
+$accessPassword = Read-Host -Prompt "Enter the password for the Access database" -AsSecureString
+$accessPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($accessPassword))
 
 # Open the Access database using the temporary SQL script
 try {
