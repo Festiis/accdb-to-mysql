@@ -1,4 +1,4 @@
-# accdbToMySQL • Access Database to SQL Export
+# Access Database to SQL Export
 
 This PowerShell script is designed to facilitate the conversion of an Access database to SQL format.
 It generates SQL queries for table creation, data insertion, and relationships, allowing for easy migration of the database structure and content to other SQL-based systems.
